@@ -55,17 +55,8 @@ linreg <- setRefClass(
 
     #@description Print the coefficients and their names.
     print = function() {
-      cat("Coefficients:\n")
-      coefs <- data.frame(
-        Estimate = coefficients,
-        `Std. Error` = se.coef,
-        `t value` = t.values,
-        `Pr(>|t|)` = p.values,
-        row.names = names(coefficients)
-      )
-      print(coefs)
-      cat("\nResidual Variance:", residual.variance, "\n")
-      cat("Degrees of Freedom:", df.residual, "\n")
+      base::print(names(coefficients))
+      base::print(coefficients)
     },
 
     #@description Plot diagnostic plots: residuals vs fitted values and histogram of residuals.
@@ -119,7 +110,7 @@ linreg <- setRefClass(
         `Pr(>|t|)` = p.values,
         row.names = names(coefficients)
       )
-      print(coefs)
+      base::print(coefs)
       cat("\nResidual Variance:", residual.variance, "\n")
       cat("Degrees of Freedom:", df.residual, "\n")
       cat("Estimated σ (sigma hat):", sqrt(residual.variance), "\n")
