@@ -1,3 +1,6 @@
+names <- c("Thor Wahlestedt", "Mir Abdul Rehman")
+liuid <- c("thowa194", "abdmi452")
+
 #' Perform Linear Regression Using OLS
 #'
 #' @param formula A formula specifying the model.
