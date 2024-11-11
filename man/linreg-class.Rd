@@ -4,20 +4,32 @@
 \name{linreg-class}
 \alias{linreg-class}
 \alias{linreg}
-\title{Perform Linear Regression Using OLS}
-\arguments{
-\item{formula}{A formula specifying the model.}
-
-\item{data}{A data frame containing the variables.}
-}
-\value{
-A list containing coefficients, residuals, and model statistics.
-}
+\title{Linear Regression using Ordinary Least Squares (OLS)}
 \description{
-Perform Linear Regression Using OLS
+Linear Regression using Ordinary Least Squares (OLS)
 }
+\section{Fields}{
 
-\examples{
-data(mtcars)
-linreg(mpg ~ cyl + hp, data = mtcars)
-}
+\describe{
+\item{\code{formula}}{The formula object defining the regression model.}
+
+\item{\code{data}}{A data frame containing the variables for the regression.}
+
+\item{\code{X}}{Design matrix (model matrix).}
+
+\item{\code{y}}{Response variable.}
+
+\item{\code{beta_hat}}{Coefficients estimated by OLS.}
+
+\item{\code{y_hat}}{Fitted values.}
+
+\item{\code{residuals}}{Residuals (differences between observed and fitted values).}
+
+\item{\code{sigma_hat}}{Residual standard error.}
+
+\item{\code{t_values}}{T-statistics for the coefficients.}
+
+\item{\code{p_values}}{P-values associated with each coefficient.}
+}}
+
+
