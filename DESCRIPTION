@@ -1,16 +1,17 @@
 Package: LinearRegressionPackage
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Linear Regression Using OLS
 Version: 0.1.0
-Author: Mir Abdul Rehman and Thor
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Mir Abdul Rehman [aut], Thor Wahlestedt [aut]
+Maintainer: Mir Abdul Rehman <abdmi452@student.liu.se>, Thor Wahlestedt <thowa194@student.liu.se>
+Description: A package for performing linear regression using ordinary least squares (OLS).
+  This package provides methods for creating linear models, plotting, and summarizing results.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
+Imports: ggplot2
 Suggests: 
-    knitr,
-    rmarkdown
+  knitr,
+  rmarkdown
 VignetteBuilder: knitr

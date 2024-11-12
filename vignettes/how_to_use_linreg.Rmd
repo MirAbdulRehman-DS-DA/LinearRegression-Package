@@ -1,5 +1,7 @@
 ---
 title: "How to Use the `linreg` Package"
+author: "Mir ABdul Rehman & Thor Wahlestedt"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{how_to_use_linreg}
@@ -13,20 +15,22 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-# Ensure the package is loaded correctly
+# Load the package or load it from the current directory
 if (!requireNamespace("LinearRegressionPackage", quietly = TRUE)) {
   devtools::load_all(".")  # Load package from current directory
 } else {
   library(LinearRegressionPackage)  # Load the installed package
-}
+  }
 ```
 
-### Introduction
-The linreg package provides an implementation of Ordinary Least Squares (OLS) linear regression using a reference class object. This vignette will guide you through how to use the linreg class, fit a linear model, and use its associated methods for extracting results such as coefficients, residuals, and predictions.
+# **Introduction**
+
+The linreg package provides an implementation of Ordinary Least Squares (OLS) linear regression using a reference class object. This vignette will guide you through how to use the linreg class, fit a linear model, and use its associated methods for extracting results such as coefficients, residuals, predictions, and diagnostic plots.
 
 We'll use the famous iris dataset for examples in this vignette.
 
-### Creating and Fitting a Linear Regression Model
+# Creating and Fitting a Linear Regression Model
+
 To create a linear regression model, you can instantiate the linreg class by passing a formula and a dataset. For example, we will fit a model that predicts Petal.Length based on Sepal.Width and Sepal.Length using the iris dataset.
 
 ```{r}
@@ -36,43 +40,49 @@ data(iris)
 linreg_mod <- linreg$new(formula = Petal.Length ~ Sepal.Width + Sepal.Length, data = iris)
 ```
 
-### Viewing Model Coefficients
-After fitting the model, you can view the coefficients by using the print() method. This will display the intercept and the coefficients for each predictor variable.
+# Viewing Model Coefficients
+
+After fitting the model, you can view the coefficients by using the `coef()` method. This will display the intercept and the coefficients for each predictor variable as a named vector.
 
 ```{r}
-linreg_mod$print()
+coefficients <- linreg_mod$coef()
+print(coefficients)
 ```
 
-### Generating Predictions
-The pred() method returns the fitted (predicted) values for the linear model. You can use it to see the predicted values for the data used in the model.
+# Generating Predictions
+
+The `pred()` method returns the fitted (predicted) values for the linear model. You can use it to see the predicted values for the data used in the model.
 
 ```{r}
 predictions <- linreg_mod$pred()
 head(predictions)
 ```
 
-### Viewing Residuals
-You can access the residuals of the model using the resid() method. Residuals represent the differences between the actual and predicted values.
+# Viewing Residuals
+
+You can access the residuals of the model using the `resid()` method. Residuals represent the differences between the actual and predicted values.
 
 ```{r}
 residuals <- linreg_mod$resid()
 head(residuals)
 ```
 
-### Viewing Model Summary
-The summary() method provides a detailed summary of the model, including estimates for each coefficient, standard errors, t-values, and significance levels.
+# Viewing Model Summary
+
+The `summary()` method provides a detailed summary of the model, including estimates for each coefficient, standard errors, t-values, p-values, and significance levels.
 
 ```{r}
 linreg_mod$summary()
 ```
 
-### Plotting Residuals
-To visually inspect how well the model fits the data, you can plot the residuals against the fitted values using the plot() method.
+# Plotting Residuals and Diagnostic Plots
+
+To visually inspect how well the model fits the data, you can plot the residuals against the fitted values and generate additional diagnostic plots, such as the Scale-Location plot, using the `plot()` method.
 
 ```{r}
 linreg_mod$plot()
 ```
 
-### Conclusion
-This vignette provided an overview of the key functionalities of the linreg package, including creating and fitting a linear regression model, viewing model coefficients, generating predictions, accessing residuals, and plotting residuals.
+# Conclusion
 
+This vignette provided an overview of the key functionalities of the linreg package, including creating and fitting a linear regression model, viewing model coefficients, generating predictions, accessing residuals, viewing a detailed model summary, and plotting residual diagnostics. The linreg package aims to provide a simple yet comprehensive implementation of linear regression using OLS.

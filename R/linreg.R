@@ -41,6 +41,7 @@ linreg <- setRefClass(
 
       formula <<- formula
       data <<- data
+      data_name <<- deparse(substitute(data))  # Store the name of the dataset
       X <<- model.matrix(formula, data)
       y <<- data[[all.vars(formula)[1]]]
       fit_model()
@@ -76,10 +77,10 @@ linreg <- setRefClass(
 
     # Method to print the coefficients
     print = function() {
-      # Print the formula exactly as expected
-      cat("linreg(formula = ", deparse(formula), ", data = iris)\n", sep = "")
+      # Print the formula and dataset used
+      cat("linreg(formula = ", deparse(formula), ", data = ", data_name, ")\n", sep = "")
 
-      # Print coefficients exactly as expected (names only, in one line)
+      # Print coefficients names in a single line
       cat("\nCoefficients:\n")
       coef_names <- colnames(X)
       coef_names[1] <- "(Intercept)"
@@ -88,9 +89,11 @@ linreg <- setRefClass(
       cat(paste(coef_names, collapse = " "), "\n")
     },
 
-    # Method to return coefficients
+    # Method to return coefficients as a named vector
     coef = function() {
-      return(beta_hat)
+      coef_names <- colnames(X)
+      coef_names[1] <- "(Intercept)"
+      return(setNames(beta_hat, coef_names))
     },
 
     # Method to return residuals
@@ -103,8 +106,9 @@ linreg <- setRefClass(
       return(y_hat)
     },
 
-    # Method to plot residuals vs fitted values
+    # Method to plot residuals vs fitted values and scale-location plot
     plot = function() {
+      # Residuals vs Fitted plot
       plot_data <- data.frame(Fitted = y_hat, Residuals = residuals)
       p1 <- ggplot(plot_data, aes(x = Fitted, y = Residuals)) +
         geom_point() +
@@ -112,7 +116,18 @@ linreg <- setRefClass(
         labs(title = "Residuals vs Fitted", x = "Fitted Values", y = "Residuals") +
         theme_minimal()
 
+      # Scale-Location plot
+      scale_loc <- sqrt(abs(residuals))
+      plot_data$ScaleLocation <- scale_loc
+      p2 <- ggplot(plot_data, aes(x = Fitted, y = ScaleLocation)) +
+        geom_point() +
+        geom_smooth(se = FALSE, linetype = "dashed", color = "blue") +
+        labs(title = "Scale-Location Plot", x = "Fitted Values", y = "Sqrt(|Residuals|)") +
+        theme_minimal()
+
+      # Print both plots
       print(p1)
+      print(p2)
     },
 
     # Method to show summary (similar to summary.lm())
