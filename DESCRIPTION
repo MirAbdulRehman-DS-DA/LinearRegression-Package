@@ -10,8 +10,15 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
-Imports: ggplot2
+Depends:
+    R(>= 3.0),
+    methods
+Imports:
+    ggplot2,
+    gridExtra
 Suggests: 
-  knitr,
-  rmarkdown
+    knitr,
+    tinytex,
+    rmarkdown,
+    devtools
 VignetteBuilder: knitr

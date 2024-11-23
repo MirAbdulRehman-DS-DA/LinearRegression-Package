@@ -29,7 +29,7 @@ Linear Regression using Ordinary Least Squares (OLS)
 
 \item{\code{t_values}}{T-statistics for the coefficients.}
 
-\item{\code{p_values}}{P-values associated with each coefficient.}
+\item{\code{p_values}}{P-values associated with each coefficient}
 }}
 
 

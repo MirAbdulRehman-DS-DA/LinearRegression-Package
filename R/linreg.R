@@ -1,7 +1,10 @@
 # Load necessary libraries
-library(ggplot2)
-
-#' Linear Regression using Ordinary Least Squares (OLS)
+#' @import methods
+#' @import ggplot2
+#' @importFrom ggplot2 ggplot aes geom_point
+#' @importFrom gridExtra grid.arrange
+#' @importFrom methods setClass setMethod new
+#' @title Linear Regression using Ordinary Least Squares (OLS)
 #'
 #' @field formula The formula object defining the regression model.
 #' @field data A data frame containing the variables for the regression.
@@ -12,9 +15,9 @@ library(ggplot2)
 #' @field residuals Residuals (differences between observed and fitted values).
 #' @field sigma_hat Residual standard error.
 #' @field t_values T-statistics for the coefficients.
-#' @field p_values P-values associated with each coefficient.
-#' @import ggplot2
+#' @field p_values P-values associated with each coefficient
 #' @export
+#' @export linreg
 linreg <- setRefClass(
   "linreg",
 
@@ -28,7 +31,8 @@ linreg <- setRefClass(
     residuals = "numeric",
     sigma_hat = "numeric",
     t_values = "numeric",
-    p_values = "numeric"
+    p_values = "numeric",
+    data_name = "character"
   ),
 
   methods = list(
@@ -41,7 +45,7 @@ linreg <- setRefClass(
 
       formula <<- formula
       data <<- data
-      data_name <<- deparse(substitute(data))  # Store the name of the dataset
+      data_name <<- deparse(substitute(data))
       X <<- model.matrix(formula, data)
       y <<- data[[all.vars(formula)[1]]]
       fit_model()
@@ -126,8 +130,7 @@ linreg <- setRefClass(
         theme_minimal()
 
       # Print both plots
-      print(p1)
-      print(p2)
+      grid.arrange(p1, p2, ncol=1)
     },
 
     # Method to show summary (similar to summary.lm())
