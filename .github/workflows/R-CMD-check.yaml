@@ -1,5 +1,4 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
     branches: [main, master]
@@ -32,15 +31,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Homebrew (macOS only)
+      - name: Ensure qpdf on macOS
         if: runner.os == 'macOS'
         run: |
-          brew update || true
-
-      - name: Install qpdf (macOS only)
-        if: runner.os == 'macOS'
-        run: |
-          brew install qpdf || true
+          brew list qpdf || brew install qpdf
+        continue-on-error: true
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -50,6 +45,12 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - name: Debug dependencies on macOS
+        if: runner.os == 'macOS'
+        run: |
+          brew doctor || true
+          brew list || true
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
@@ -58,4 +59,4 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+          build_args: 'c("--no-manual")' # "--compact-vignettes=gs+qpdf")
